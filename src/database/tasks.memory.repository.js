@@ -47,11 +47,22 @@ const deleteTaskData = (id) => {
   });
 
   return result;
+};
+
+const deleteTasksOfBoard = (boardId) => {
+  tasks = tasks.filter(task => task.boardId !== boardId)
+};
+
+const updateTasks = (callback) => {
+  tasks = tasks.map(callback)
 }
+
 
 module.exports = {
   addNewTask,
+  deleteTasksOfBoard,
   deleteTaskData,
   getAllTasks,
   updateTaskData,
+  updateTasks,
 };

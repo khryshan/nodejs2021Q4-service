@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require('uuid'); 
+const { updateTasks } = require('../database/tasks.memory.repository')
 const { addNewUser, getAllUsers, updateUserData, deleteUserData } = require('../database/users.memory.repository');
 
 
@@ -41,10 +42,16 @@ const updateUser = (request, reply) => {
   reply.send(updatedUser)
 };
 
-const deleteUser = (request, reply) => {
+const deleteUser = async (request, reply) => {
   const { userId } = request.params;
 
   const result = deleteUserData(userId);
+  await updateTasks((task) => {
+    if(task.userId === userId) {
+      return { ...task, userId: null };
+    };
+    return task;
+  })
 
   if(result) {
     reply.send({message: 'User has been removed'});
