@@ -1,6 +1,6 @@
 let boards = [
   {
-    id: 'df5fae3e-470f-4b93-000f-00d7390c3a9d',
+    id: '6ec0bd7f-11c0-43da-975e-2a8ad9ebae0b',
     title: 'Autotest board',
     columns: [
       { title: 'Backlog', order: 1 },

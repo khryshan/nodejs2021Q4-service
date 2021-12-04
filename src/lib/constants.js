@@ -13,6 +13,12 @@ const URLS = {
   UPDATE_BOARD: '/boards/:boardId',
   DELETE_BOARD: '/boards/:boardId',
 
+  // tasks
+  GET_TASKS: '/boards/:boardId/tasks',
+  GET_TASK: '/boards/:boardId/tasks/:taskId',
+  ADD_TASK: '/boards/:boardId/tasks',
+  UPDATE_TASK: '/boards/:boardId/tasks/:taskId',
+  DELETE_TASK: '/boards/:boardId/tasks/:taskId'
 }
 
 module.exports = { URLS }

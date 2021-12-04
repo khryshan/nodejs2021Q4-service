@@ -8,6 +8,8 @@ const fastify = require('fastify')({
 });
 const usersRoutes = require('./routers/users.router');
 const boardsRoutes = require('./routers/boards.router');
+const tasksRoutes = require('./routers/tasks.router');
+
 // const path = require('path');
 
 const app = fastify;
@@ -27,5 +29,6 @@ app.register(require('fastify-swagger'), {
 
 app.register(usersRoutes);
 app.register(boardsRoutes);
+app.register(tasksRoutes);
 
 module.exports = app;
