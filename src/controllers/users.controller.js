@@ -12,7 +12,11 @@ const getUser = (request, reply) => {
   const { userId } = request.params;
   const currentUser = users.filter(user => (user.id === userId));
 
-  reply.send(currentUser[0])
+  if (currentUser?.length !== 0) {
+    reply.send(currentUser[0]);
+  } else {
+    reply.code(404).send({message: 'Not Found'});
+  };
 };
 
 const addUser = (request, reply) => {
@@ -39,9 +43,14 @@ const updateUser = (request, reply) => {
 
 const deleteUser = (request, reply) => {
   const { userId } = request.params;
-  deleteUserData(userId);
 
-  reply.send({message: 'User has been removed'});
+  const result = deleteUserData(userId);
+
+  if(result) {
+    reply.send({message: 'User has been removed'});
+  } else {
+    reply.code(404).send({message: 'Not Found'});
+  };
 };
 
 module.exports = {

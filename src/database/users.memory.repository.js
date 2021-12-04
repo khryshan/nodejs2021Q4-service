@@ -33,7 +33,16 @@ const updateUserData = (id, data) => {
 };
 
 const deleteUserData = (id) => {
-  users = users.filter(user => (user.id !== id));
+  let result = false;
+  users = users.filter(user => {
+    if(user.id !== id) {
+      return true;
+    }
+      result = true;
+      return false;
+  });
+
+  return result;
 }
 
 module.exports = { 
