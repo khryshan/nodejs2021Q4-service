@@ -1,3 +1,4 @@
+const path = require('path');
 const fastify = require('fastify')({
   logger: {
     prettyPrint: {
@@ -10,17 +11,15 @@ const usersRoutes = require('./routers/users.router');
 const boardsRoutes = require('./routers/boards.router');
 const tasksRoutes = require('./routers/tasks.router');
 
-// const path = require('path');
-
 const app = fastify;
 
 app.register(require('fastify-swagger'), {
   exposeRoute: true,
-  // routePrefix: '/docs',
-  // mode: 'static',
-  // specification: {
-  //   path: path.join(__dirname, '../docs/api.yaml'),
-  // },
+  routePrefix: '/doc',
+  mode: 'static',
+  specification: {
+    path: path.join(__dirname, '../doc/api.yaml'),
+  },
   swagger: {
     info: { title: 'fastify-api' },
     description: 'testing the fastify swagger api',
@@ -29,6 +28,6 @@ app.register(require('fastify-swagger'), {
 
 app.register(usersRoutes);
 app.register(boardsRoutes);
-app.register(tasksRoutes);
+app.register(tasksRoutes, { prefix: '/boards/:boardId' });
 
 module.exports = app;
