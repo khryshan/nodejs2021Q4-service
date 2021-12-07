@@ -1,9 +1,6 @@
 const { PORT } = require('./common/config');
 const app = require('./app');
 
-console.log("+++pdf")
-
-
 app.listen(PORT, (err: any) => {
   if (err) {
     app.log.error(err)
