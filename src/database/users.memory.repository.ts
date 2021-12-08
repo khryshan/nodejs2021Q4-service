@@ -1,4 +1,6 @@
-let users = [
+import { IUser } from '../types';
+
+let users: Array<IUser> = [
   {
     id: 'c106a26a-21bb-5538-8bf2-57095d1976c1',
     login: 'JW',
@@ -8,23 +10,23 @@ let users = [
 ];
 
 
-const getAllUsers = () => users;
+export const getAllUsers = ():Array<IUser> => users;
 
-const addNewUser = (newUser) => {
+export const addNewUser = (newUser: IUser): void => {
   users = [...users, newUser];
 };
 
-const updateUserData = (id, data) => {
-  let updatedUser = {};
+export const updateUserData = (id: string, data: IUser): IUser => {
+  let updatedUser: IUser = {};
   
-  users = users.map(user => {
+  users = users.map((user: IUser): IUser => {
     if (user.id === id) {
       updatedUser = {
         ...user,
         ...data
       };
       return updatedUser
-    }
+    };
 
     return user;
   });
@@ -32,9 +34,9 @@ const updateUserData = (id, data) => {
   return updatedUser;
 };
 
-const deleteUserData = (id) => {
+export const deleteUserData = (id: string): boolean => {
   let result = false;
-  users = users.filter(user => {
+  users = users.filter((user: IUser):boolean => {
     if(user.id !== id) {
       return true;
     }
@@ -43,11 +45,4 @@ const deleteUserData = (id) => {
   });
 
   return result;
-}
-
-module.exports = { 
-  addNewUser, 
-  deleteUserData,
-  getAllUsers, 
-  updateUserData 
 };

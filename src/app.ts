@@ -1,5 +1,12 @@
-const path = require('path');
-const fastify = require('fastify')({
+import path from 'path';
+import fastify, { FastifyInstance } from 'fastify';
+import SwaggerPlugin from 'fastify-swagger'
+
+import usersRoutes from './routers/users.router';
+import boardsRoutes from './routers/boards.router';
+import tasksRoutes from './routers/tasks.router';
+
+const app: FastifyInstance = fastify({
   logger: {
     prettyPrint: {
       translateTime: true,
@@ -7,13 +14,9 @@ const fastify = require('fastify')({
     }
   }
 });
-const usersRoutes = require('./routers/users.router');
-const boardsRoutes = require('./routers/boards.router');
-const tasksRoutes = require('./routers/tasks.router');
 
-const app = fastify;
-
-app.register(require('fastify-swagger'), {
+// @ts-ignore
+app.register(SwaggerPlugin, {
   exposeRoute: true,
   routePrefix: '/doc',
   mode: 'static',
@@ -30,4 +33,4 @@ app.register(usersRoutes);
 app.register(boardsRoutes);
 app.register(tasksRoutes, { prefix: '/boards/:boardId' });
 
-module.exports = app;
+export default app;

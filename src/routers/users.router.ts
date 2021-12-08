@@ -1,4 +1,14 @@
-const { URLS } = require('../lib/constants');
+import { FastifyInstance, FastifyPluginAsync } from 'fastify';
+
+import { URLS } from '../lib/constants';
+import { 
+  addUser,
+  deleteUser,
+  getUsers,
+  getUser,
+  updateUser
+} from '../controllers/users.controller';
+
 
 const {
   GET_USER,
@@ -7,14 +17,6 @@ const {
   UPDATE_USER,
   DELETE_USER
 } = URLS;
-
-const { 
-  addUser,
-  deleteUser,
-  getUsers,
-  getUser,
-  updateUser
-} = require('../controllers/users.controller');
 
 const User = {
   type: 'object',
@@ -84,20 +86,24 @@ const deleteUserOpts = {
     },
   },
   handler: deleteUser
-}
+};
 
-
-function usersRoutes(app, options, done) {
+console.log('sd')
+const usersRoutes: FastifyPluginAsync = async (
+  app: FastifyInstance,
+  // options: FastifyPluginOptions,
+  // done: 
+): Promise<void> => {
   app.get(GET_USERS, getUsersOpts);
   app.get(GET_USER, getUserOpts);
   app.post(ADD_USER, postUsersOpts)
   app.put(UPDATE_USER, putUserOpts);
   app.delete(DELETE_USER, deleteUserOpts);
   
-  done();
+  // done();
 };
 
-module.exports = usersRoutes;
+export default usersRoutes;
 
 
 

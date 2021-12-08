@@ -1,4 +1,6 @@
-let boards = [
+import { IBoard } from '../types';
+
+let boards:Array<IBoard> = [
   {
     id: '6ec0bd7f-11c0-43da-975e-2a8ad9ebae0b',
     title: 'Autotest board',
@@ -9,16 +11,16 @@ let boards = [
   },
 ];
 
-const getAllBoards = () => boards;
+export const getAllBoards = ():Array<IBoard> => boards;
 
-const addNewBoard = (newBoard) => {
+export const addNewBoard = (newBoard:IBoard):void => {
   boards = [...boards, newBoard];
 };
 
-const updateBoardData = (id, data) => {
-  let updatedBoard = {};
+export const updateBoardData = (id:string, data:IBoard):IBoard => {
+  let updatedBoard:IBoard = {};
   
-  boards = boards.map(board => {
+  boards = boards.map((board:IBoard):IBoard => {
     if (board.id === id) {
       updatedBoard = {
         ...board,
@@ -33,9 +35,9 @@ const updateBoardData = (id, data) => {
   return updatedBoard;
 };
 
-const deleteBoardData = (id) => {
+export const deleteBoardData = (id: string):boolean => {
   let result = false;
-  boards = boards.filter(board => {
+  boards = boards.filter((board:IBoard):boolean => {
     if(board.id !== id) {
       return true;
     }
@@ -44,11 +46,4 @@ const deleteBoardData = (id) => {
   });
 
   return result;
-}
-
-module.exports = { 
-  addNewBoard,
-  getAllBoards,
-  deleteBoardData,
-  updateBoardData
 };

@@ -1,4 +1,4 @@
-const URLS = {
+export const URLS = {
   // /users
   GET_USERS: '/users',
   GET_USER: '/users/:userId',
@@ -20,5 +20,3 @@ const URLS = {
   UPDATE_TASK: '/tasks/:taskId',
   DELETE_TASK: '/tasks/:taskId'
 }
-
-module.exports = { URLS }

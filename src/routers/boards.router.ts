@@ -1,4 +1,14 @@
-const { URLS } = require('../lib/constants');
+import { FastifyInstance, FastifyPluginAsync } from 'fastify';
+
+import { URLS } from '../lib/constants';
+import {
+  addBoard,
+  deleteBoard,
+  getBoard,
+  getBoards,
+  updateBoard
+} from '../controllers/boards.controller';
+
 
 const {
   GET_BOARDS,
@@ -7,14 +17,6 @@ const {
   UPDATE_BOARD,
   DELETE_BOARD
 } = URLS;
-
-const {
-  addBoard,
-  deleteBoard,
-  getBoard,
-  getBoards,
-  updateBoard
-} = require('../controllers/boards.controller');
 
 const Column = {
   type: 'object',
@@ -100,18 +102,17 @@ const deleteBoardOpts = {
   handler: deleteBoard
 }
 
-
-function boardsRoutes(app, options, done) {
+const boardsRoutes: FastifyPluginAsync = async (
+  app: FastifyInstance,
+): Promise<void> => {
   app.get(GET_BOARDS, getBoardsOpts);
   app.get(GET_BOARD, getBoardOpts);
   app.post(ADD_BOARD, postBoardOpts)
   app.put(UPDATE_BOARD, putBoardOpts);
   app.delete(DELETE_BOARD, deleteBoardOpts);
-  
-  done();
 };
 
-module.exports = boardsRoutes;
+export default boardsRoutes;
 
 
 

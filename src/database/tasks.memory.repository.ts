@@ -1,4 +1,6 @@
-let tasks = [
+import { ITask } from '../types';
+
+let tasks: Array<ITask> = [
   {
     id: '630eb68f-e0fa-5ecc-887a-7c7a62614681',
     title: 'Autotest task',
@@ -11,17 +13,17 @@ let tasks = [
 ];
 
 
-const getAllTasks = () => tasks;
+export const getAllTasks = ():Array<ITask> => tasks;
 
-const addNewTask = (newTask) => {
+export const addNewTask = (newTask:ITask):void => {
   tasks = [...tasks, newTask];
 };
 
 
-const updateTaskData = (id, data) => {
-  let updatedTask = {};
+export const updateTaskData = (id:string, data:ITask):ITask => {
+  let updatedTask:ITask = {};
   
-  tasks = tasks.map(task => {
+  tasks = tasks.map((task:ITask):ITask => {
     if (task.id === id) {
       updatedTask = {
         ...task,
@@ -36,9 +38,9 @@ const updateTaskData = (id, data) => {
   return updatedTask;
 };
 
-const deleteTaskData = (id) => {
+export const deleteTaskData = (id: string):boolean => {
   let result = false;
-  tasks = tasks.filter(task => {
+  tasks = tasks.filter((task:ITask):boolean => {
     if(task.id !== id) {
       return true;
     }
@@ -49,20 +51,10 @@ const deleteTaskData = (id) => {
   return result;
 };
 
-const deleteTasksOfBoard = (boardId) => {
-  tasks = tasks.filter(task => task.boardId !== boardId)
+export const deleteTasksOfBoard = (boardId: string) => {
+  tasks = tasks.filter((task:ITask):boolean => task.boardId !== boardId)
 };
-
-const updateTasks = (callback) => {
+// @ts-ignore
+export const updateTasks = (callback) => {
   tasks = tasks.map(callback)
-}
-
-
-module.exports = {
-  addNewTask,
-  deleteTasksOfBoard,
-  deleteTaskData,
-  getAllTasks,
-  updateTaskData,
-  updateTasks,
 };

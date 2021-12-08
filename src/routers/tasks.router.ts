@@ -1,4 +1,14 @@
-const { URLS } = require('../lib/constants');
+import { FastifyInstance, FastifyPluginAsync } from 'fastify';
+
+import { URLS } from '../lib/constants';
+import {
+  addTask,
+  deleteTask,
+  getTask,
+  getTasks,
+  updateTask
+} from '../controllers/tasks.controller';
+
 
 const {
   GET_TASKS,
@@ -7,15 +17,6 @@ const {
   UPDATE_TASK,
   DELETE_TASK
 } = URLS;
-
-const {
-  addTask,
-  deleteTask,
-  getTask,
-  getTasks,
-  updateTask
-} = require('../controllers/tasks.controller');
-
 
 const Task = {
   type: 'object',
@@ -95,14 +96,14 @@ const deleteTaskOpts = {
   handler: deleteTask
 }
 
-function boardsRoutes(app, options, done) {
+const tasksRoutes: FastifyPluginAsync = async (
+  app: FastifyInstance,
+): Promise<void> => {
   app.get(GET_TASKS, getTasksOpts);
   app.get(GET_TASK, getTaskOpts);
   app.post(ADD_TASK, postTasksOpts)
   app.put(UPDATE_TASK, putTaskOpts);
   app.delete(DELETE_TASK, deleteTaskOpts);
-  
-  done();
 };
 
-module.exports = boardsRoutes;
+export default tasksRoutes;
