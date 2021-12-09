@@ -1,6 +1,6 @@
-import path from 'path';
 import fastify, { FastifyInstance } from 'fastify';
-import SwaggerPlugin from 'fastify-swagger'
+import swagger from 'fastify-swagger';
+import path from 'path';
 
 import usersRoutes from './routers/users.router';
 import boardsRoutes from './routers/boards.router';
@@ -15,17 +15,13 @@ const app: FastifyInstance = fastify({
   }
 });
 
-// @ts-ignore
-app.register(SwaggerPlugin, {
+app.register(swagger, {
   exposeRoute: true,
   routePrefix: '/doc',
   mode: 'static',
   specification: {
     path: path.join(__dirname, '../doc/api.yaml'),
-  },
-  swagger: {
-    info: { title: 'fastify-api' },
-    description: 'testing the fastify swagger api',
+    baseDir: __dirname,
   }
 });
 

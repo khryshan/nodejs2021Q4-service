@@ -88,19 +88,14 @@ const deleteUserOpts = {
   handler: deleteUser
 };
 
-console.log('sd')
 const usersRoutes: FastifyPluginAsync = async (
   app: FastifyInstance,
-  // options: FastifyPluginOptions,
-  // done: 
 ): Promise<void> => {
   app.get(GET_USERS, getUsersOpts);
   app.get(GET_USER, getUserOpts);
   app.post(ADD_USER, postUsersOpts)
   app.put(UPDATE_USER, putUserOpts);
   app.delete(DELETE_USER, deleteUserOpts);
-  
-  // done();
 };
 
 export default usersRoutes;

@@ -1,4 +1,4 @@
-import { ITask } from '../types';
+import { ITask, TCallback } from '../types';
 
 let tasks: Array<ITask> = [
   {
@@ -54,7 +54,7 @@ export const deleteTaskData = (id: string):boolean => {
 export const deleteTasksOfBoard = (boardId: string) => {
   tasks = tasks.filter((task:ITask):boolean => task.boardId !== boardId)
 };
-// @ts-ignore
-export const updateTasks = (callback) => {
+
+export const updateTasks = (callback:TCallback<ITask>) => {
   tasks = tasks.map(callback)
 };

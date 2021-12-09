@@ -25,3 +25,5 @@ export interface ITask {
   boardId?: string | null,
   columnId?: string | null,
 };
+
+export type TCallback<T> = (arg: T) => T;

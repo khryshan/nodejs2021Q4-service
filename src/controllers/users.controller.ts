@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
 import { updateTasks } from '../database/tasks.memory.repository';
 import { addNewUser, getAllUsers, updateUserData, deleteUserData } from '../database/users.memory.repository';
-import { IUser, ITask } from '../types';
+import { IUser } from '../types';
 
 type CustomUsersRequest = FastifyRequest<{
   Params: { 
@@ -54,7 +54,7 @@ export const deleteUser = async (request: CustomUsersRequest, reply: FastifyRepl
   const { userId } = request.params;
 
   const result: boolean = deleteUserData(userId);
-  await updateTasks((task:ITask) => {
+  await updateTasks((task) => {
     if(task.userId === userId) {
       return { ...task, userId: null };
     };
