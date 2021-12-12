@@ -12,14 +12,31 @@ let tasks: Array<ITask> = [
   },
 ];
 
-
+/**
+ * Returns all tasks
+ * @returns Array of all tasks (type {@link ITask}) or empty array
+ */
 export const getAllTasks = ():Array<ITask> => tasks;
 
+/**
+ * Saves a new task
+ * 
+ * * @remarks
+ * push a new object of task to array of tasks
+ * 
+ * @param newTask {@link ITask} - data of the new task
+ * @returns {void} does not return any value
+ */
 export const addNewTask = (newTask:ITask):void => {
   tasks = [...tasks, newTask];
 };
 
-
+/**
+ * Updates a date of existing task
+ * @param {string} id - identifier of a task
+ * @param data {@link ITask} - new data of the task, which needs update
+ * @returns object of the updated task (type {@link ITask})
+ */
 export const updateTaskData = (id:string, data:ITask):ITask => {
   let updatedTask:ITask = {};
   
@@ -38,6 +55,11 @@ export const updateTaskData = (id:string, data:ITask):ITask => {
   return updatedTask;
 };
 
+/**
+ * Removes existing task
+ * @param {string} id - identifier of a task
+ * @returns boolean value (true or false), was removed object or not
+ */
 export const deleteTaskData = (id: string):boolean => {
   let result = false;
   tasks = tasks.filter((task:ITask):boolean => {
@@ -51,10 +73,26 @@ export const deleteTaskData = (id: string):boolean => {
   return result;
 };
 
+/**
+ * Removes existing task
+ * 
+ * * @remarks
+ * removes a task which has relate to removing board
+ * if removes board which uses current task it means 
+ * that we need to remove all related tasks
+ * 
+ * @param {string} id - identifier of a board
+ * @returns {void} does not return any value
+ */
 export const deleteTasksOfBoard = (boardId: string) => {
   tasks = tasks.filter((task:ITask):boolean => task.boardId !== boardId)
 };
 
+ /**
+ * Update array of tasks
+ * @param callback {@link TCallback<ITask>} - the callback that handles updating tasks into array
+ * @returns {void} does not return any value
+ */
 export const updateTasks = (callback:TCallback<ITask>) => {
   tasks = tasks.map(callback)
 };

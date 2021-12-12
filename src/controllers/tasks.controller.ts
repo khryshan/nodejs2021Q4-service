@@ -11,7 +11,16 @@ type CustomTasksRequest = FastifyRequest<{
   Body: ITask;
 }>;
 
-export const validatedId = (ids: Array<string>) => {
+/**
+ * Handles validating id
+ * 
+ * * @remarks
+ * if id is invalid the function will throw an error
+ * 
+ * @param {Array<string>} ids - array of identifiers
+ * @returns void
+ */
+export const validatedId = (ids: Array<string>): void => {
   ids.forEach((id: string): void =>{
     if (!uuidValidate(id)) {
       throw new Error('Not Found')
@@ -19,7 +28,20 @@ export const validatedId = (ids: Array<string>) => {
   });
 }
 
-export const getTasks = (request: CustomTasksRequest, reply: FastifyReply) => {
+/**
+ * Handles getting list of tasks and using as reply of the request
+ * 
+ * * @remarks
+ * also handle error, e.g.if id is invalid
+ * 
+ * @param request {@link CustomTasksRequest} - request of query
+ * @param reply {@link FastifyReply} - response of query
+ * @returns Promise<void>
+ */
+export const getTasks = async (
+  request: CustomTasksRequest,
+  reply: FastifyReply
+): Promise<void> => {
   try {
     const { boardId } = request.params;
     validatedId([boardId]);
@@ -31,7 +53,20 @@ export const getTasks = (request: CustomTasksRequest, reply: FastifyReply) => {
   }
 };
 
-export const getTask = (request: CustomTasksRequest, reply: FastifyReply) => {
+/**
+ * Handles getting the object of task and using as reply of the request
+ * 
+ * * @remarks
+ * also handle error, e.g.if id is invalid or nothing was find
+ * 
+ * @param request {@link CustomTasksRequest} - request of query
+ * @param reply {@link FastifyReply} - response of query
+ * @returns Promise<void>
+ */
+export const getTask = async (
+  request: CustomTasksRequest,
+  reply: FastifyReply
+): Promise<void> => {
   try {
     const { boardId, taskId } = request.params;
     validatedId([boardId, taskId]);
@@ -48,7 +83,20 @@ export const getTask = (request: CustomTasksRequest, reply: FastifyReply) => {
   }
 };
 
-export const addTask = (request: CustomTasksRequest, reply: FastifyReply) => {
+/**
+ * Handles adding new task and using as reply of the request
+ * 
+ * * @remarks
+ * also handle error, e.g.if id is invalid
+ * 
+ * @param request {@link CustomTasksRequest} - request of query
+ * @param reply {@link FastifyReply} - response of query
+ * @returns Promise<void>
+ */
+export const addTask = async (
+  request: CustomTasksRequest,
+  reply: FastifyReply
+): Promise<void> => {
   try {
     const { boardId: boardURLId } = request.params;
     validatedId([boardURLId]);
@@ -77,7 +125,20 @@ export const addTask = (request: CustomTasksRequest, reply: FastifyReply) => {
   }
 };
 
-export const updateTask = (request: CustomTasksRequest, reply: FastifyReply) => {
+/**
+ * Handles updating the object of task and using as reply of the request
+ * 
+ * * @remarks
+ * also handle error, e.g.if id is invalid
+ * 
+ * @param request {@link CustomTasksRequest} - request of query
+ * @param reply {@link FastifyReply} - response of query
+ * @returns Promise<void>
+ */
+export const updateTask = async (
+  request: CustomTasksRequest,
+  reply: FastifyReply
+): Promise<void> => {
   try {
     const { boardId, taskId } = request.params;
     validatedId([boardId, taskId]);
@@ -90,7 +151,20 @@ export const updateTask = (request: CustomTasksRequest, reply: FastifyReply) => 
   }
 };
 
-export const deleteTask = (request: CustomTasksRequest, reply: FastifyReply) => {
+/**
+ * Handles removing the object of task and repling of the request
+ * 
+ * * @remarks
+ * also handle error, e.g.if id is invalid or nothing was find
+ * 
+ * @param request {@link CustomTasksRequest} - request of query
+ * @param reply {@link FastifyReply} - response of query
+ * @returns Promise<void>
+ */
+export const deleteTask = async (
+  request: CustomTasksRequest,
+  reply: FastifyReply
+): Promise<void> => {
   try {
     const { boardId, taskId } = request.params;
     validatedId([boardId, taskId]);

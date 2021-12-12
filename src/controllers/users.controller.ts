@@ -11,12 +11,34 @@ type CustomUsersRequest = FastifyRequest<{
   Body: IUser;
 }>;
 
-export const getUsers = async (request: CustomUsersRequest, reply: FastifyReply) => {
+/**
+ * Handles getting list of users and using as reply of the request
+ * @param request {@link CustomUsersRequest} - request of query
+ * @param reply {@link FastifyReply} - response of query
+ * @returns Promise<void>
+ */
+export const getUsers = async (
+  request: CustomUsersRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const users: Array<IUser> = getAllUsers();
   reply.send(users);
 };
 
-export const getUser = async (request: CustomUsersRequest, reply: FastifyReply) => {
+/**
+ * Handles getting the object of user and using as reply of the request
+ * 
+ * * @remarks
+ * also handle error, e.g.if nothing was find
+ * 
+ * @param request {@link CustomUsersRequest} - request of query
+ * @param reply {@link FastifyReply} - response of query
+ * @returns Promise<void>
+ */
+export const getUser = async (
+  request: CustomUsersRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const users: Array<IUser> = getAllUsers();
   const { userId } = request.params;
   const currentUser: Array<IUser> = users.filter((user: IUser):boolean => (user.id === userId));
@@ -28,7 +50,16 @@ export const getUser = async (request: CustomUsersRequest, reply: FastifyReply) 
   };
 };
 
-export const addUser = async (request: CustomUsersRequest, reply: FastifyReply) => {
+/**
+ * Handles adding new user and using as reply of the request
+ * @param request {@link CustomUsersRequest} - request of query
+ * @param reply {@link FastifyReply} - response of query
+ * @returns Promise<void>
+ */
+export const addUser = async (
+  request: CustomUsersRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const { login, name, password } = request.body;
   const newUser: IUser = {
     id: uuidv4(),
@@ -41,7 +72,16 @@ export const addUser = async (request: CustomUsersRequest, reply: FastifyReply) 
   reply.code(201).send(newUser);
 };
 
-export const updateUser = async (request: CustomUsersRequest, reply: FastifyReply) => {
+/**
+ * Handles updating the object of user and using as reply of the request
+ * @param request {@link CustomUsersRequest} - request of query
+ * @param reply {@link FastifyReply} - response of query
+ * @returns Promise<void>
+ */
+export const updateUser = async (
+  request: CustomUsersRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const { userId } = request.params;
   const newUserData = request.body;
 
@@ -50,7 +90,20 @@ export const updateUser = async (request: CustomUsersRequest, reply: FastifyRepl
   reply.send(updatedUser)
 };
 
-export const deleteUser = async (request: CustomUsersRequest, reply: FastifyReply) => {
+/**
+ * Handles removing the object of user and repling of the request
+ * 
+ * * @remarks
+ * also handle error, e.g.if nothing was find
+ * 
+ * @param request {@link CustomUsersRequest} - request of query
+ * @param reply {@link FastifyReply} - response of query
+ * @returns Promise<void>
+ */
+export const deleteUser = async (
+  request: CustomUsersRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const { userId } = request.params;
 
   const result: boolean = deleteUserData(userId);

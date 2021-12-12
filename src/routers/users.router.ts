@@ -88,6 +88,16 @@ const deleteUserOpts = {
   handler: deleteUser
 };
 
+/**
+ * Declare a routes of users
+ * 
+ * * @remarks
+ * This function handle some endpoints of users, which to help get user or 
+ * all users, add new user, update user and delete user
+ * 
+ * @param app {@link FastifyInstance } - instance of framework (fastify)
+ * @returns Promise<void>
+ */
 const usersRoutes: FastifyPluginAsync = async (
   app: FastifyInstance,
 ): Promise<void> => {

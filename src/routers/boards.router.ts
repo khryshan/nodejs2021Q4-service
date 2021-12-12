@@ -102,6 +102,16 @@ const deleteBoardOpts = {
   handler: deleteBoard
 }
 
+/**
+ * Declare a routes of boards
+ * 
+ * * @remarks
+ * This function handle some endpoints of boards, which to help get board or 
+ * all boards, add new board, update board and delete board
+ * 
+ * @param app {@link FastifyInstance } - instance of framework (fastify)
+ * @returns Promise<void>
+ */
 const boardsRoutes: FastifyPluginAsync = async (
   app: FastifyInstance,
 ): Promise<void> => {

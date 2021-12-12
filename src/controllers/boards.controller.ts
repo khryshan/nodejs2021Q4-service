@@ -12,12 +12,34 @@ type CustomBoardsRequest = FastifyRequest<{
   Body: IBoard;
 }>;
 
-export const getBoards = async (request: CustomBoardsRequest, reply: FastifyReply) => {
+/**
+ * Handles getting list of boards and using as reply of the request
+ * @param request {@link CustomBoardsRequest} - request of query
+ * @param reply {@link FastifyReply} - response of query
+ * @returns Promise<void>
+ */
+export const getBoards = async (
+  request: CustomBoardsRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const boards: Array<IBoard> = getAllBoards();
   reply.send(boards);
 };
 
-export const getBoard = async (request: CustomBoardsRequest, reply: FastifyReply) => {
+/**
+ * Handles getting the object of board and using as reply of the request
+ * 
+ * * @remarks
+ * also handle error, e.g.if nothing was find
+ * 
+ * @param request {@link CustomBoardsRequest} - request of query
+ * @param reply {@link FastifyReply} - response of query
+ * @returns Promise<void>
+ */
+export const getBoard = async (
+  request: CustomBoardsRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const boards: Array<IBoard> = getAllBoards();
   const { boardId } = request.params;
   const currentBoard: Array<IBoard> = boards.filter((board: IBoard):boolean => (board.id === boardId));
@@ -29,7 +51,16 @@ export const getBoard = async (request: CustomBoardsRequest, reply: FastifyReply
   };
 };
 
-export const addBoard = async (request: CustomBoardsRequest, reply: FastifyReply) => {
+/**
+ * Handles adding new board and using as reply of the request
+ * @param request {@link CustomBoardsRequest} - request of query
+ * @param reply {@link FastifyReply} - response of query
+ * @returns Promise<void>
+ */
+export const addBoard = async (
+  request: CustomBoardsRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const { title, columns = [] } = request.body;
   const newBoard: IBoard = {
     id: uuidv4(),
@@ -41,7 +72,16 @@ export const addBoard = async (request: CustomBoardsRequest, reply: FastifyReply
   reply.code(201).send(newBoard);
 };
 
-export const updateBoard = async (request: CustomBoardsRequest, reply: FastifyReply) => {
+/**
+ * Handles updating the object of board and using as reply of the request
+ * @param request {@link CustomBoardsRequest} - request of query
+ * @param reply {@link FastifyReply} - response of query
+ * @returns Promise<void>
+ */
+export const updateBoard = async (
+  request: CustomBoardsRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const { boardId } = request.params;
   const newBoardData = request.body;
 
@@ -50,7 +90,20 @@ export const updateBoard = async (request: CustomBoardsRequest, reply: FastifyRe
   reply.send(updatedBoard)
 };
 
-export const deleteBoard = async (request: CustomBoardsRequest, reply: FastifyReply) => {
+/**
+ * Handles removing the object of board and repling of the request
+ * 
+ * * @remarks
+ * also handle error, e.g.if nothing was find
+ * 
+ * @param request {@link CustomBoardsRequest} - request of query
+ * @param reply {@link FastifyReply} - response of query
+ * @returns Promise<void>
+ */
+export const deleteBoard = async (
+  request: CustomBoardsRequest,
+  reply: FastifyReply
+): Promise<void> => {
   const { boardId } = request.params;
   const result: boolean = deleteBoardData(boardId);
   await deleteTasksOfBoard(boardId);

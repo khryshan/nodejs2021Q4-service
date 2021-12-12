@@ -96,6 +96,16 @@ const deleteTaskOpts = {
   handler: deleteTask
 }
 
+/**
+ * Declare a routes of tasks
+ * 
+ * * @remarks
+ * This function handle some endpoints of tasks, which to help get task or 
+ * all tasks, add new task, update task and delete taks
+ * 
+ * @param app {@link FastifyInstance } - instance of framework (fastify)
+ * @returns Promise<void>
+ */
 const tasksRoutes: FastifyPluginAsync = async (
   app: FastifyInstance,
 ): Promise<void> => {
