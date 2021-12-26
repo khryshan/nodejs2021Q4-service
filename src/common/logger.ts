@@ -1,8 +1,44 @@
-import pino from 'pino';
+import pino, {Logger, TransportMultiOptions} from 'pino';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
-const config = {
-  transport: {
+const transport = pino.transport(<TransportMultiOptions>{
+  level: 'info',
+  serializers: {
+    res(reply:FastifyReply) {
+      return {
+        statusCode: reply.statusCode,
+      }
+    },
+    req(request:FastifyRequest) {
+      return {
+        method: request.method,
+        url: request.url,
+        params: request.params,
+      };
+    }
+  },
+  targets: [{
+    level: 'info',
+    target: 'pino-pretty',
+    options: { 
+      destination: './logs/logs.log',
+      mkdir: true,
+      translateTime: 'SYS:dd-mm-yyyy HH:MM:ss',
+      ignore: 'pid,hostname,reqId',
+      singleLine: true,
+    }
+  }, {
+    level: 'error',
+    target: 'pino-pretty',
+    options: {
+      destination: './logs/errors.log',
+      mkdir: true,
+      translateTime: 'SYS:dd-mm-yyyy HH:MM:ss',
+      ignore: 'pid,hostname,reqId',
+      singleLine: true,
+    }
+  }, 
+  {
     target: 'pino-pretty',
     level: 'info',
     options: {
@@ -11,28 +47,8 @@ const config = {
       ignore: 'pid,hostname,reqId,responseTime',
       singleLine: true,
     },
-  },
-  serializers: {
-    res (reply: FastifyReply) {        
-      return {
-        statusCode: reply.statusCode,
-      }
-    },
-    req (request: FastifyRequest) {
-      return {
-        method: request.method,
-        url: request.url,
-        params: request.params,
-      };
-    },
-    // err (error: FastifyError) {
-    //   return {
-    //     message: error.message,
-    //     statusCode: error.statusCode,
-    //   }
-    // }
-  },
-};
+  }]
+});
 
 export const parserReqBody = (request: FastifyRequest, _: FastifyReply, done: () => void) => {
   if (request.body) {
@@ -49,4 +65,4 @@ export const parserResError = (_: FastifyRequest, reply: FastifyReply, done: () 
 };
 
 
-export const logger = pino(config);
+export const logger: Logger = pino(transport);
