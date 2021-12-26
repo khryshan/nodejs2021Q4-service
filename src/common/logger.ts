@@ -1,8 +1,10 @@
 import pino, {Logger, TransportMultiOptions} from 'pino';
 import { FastifyReply, FastifyRequest } from 'fastify';
+import { LOG_LEVEL } from './config';
+
 
 const transport = pino.transport(<TransportMultiOptions>{
-  level: 'info',
+  level: LOG_LEVEL,
   serializers: {
     res(reply:FastifyReply) {
       return {
@@ -40,7 +42,7 @@ const transport = pino.transport(<TransportMultiOptions>{
   }, 
   {
     target: 'pino-pretty',
-    level: 'info',
+    level: LOG_LEVEL,
     options: {
       colorize: true,
       translateTime: 'SYS:dd-mm-yyyy HH:MM:ss',
