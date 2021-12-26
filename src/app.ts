@@ -3,6 +3,7 @@ import swagger from 'fastify-swagger';
 import path from 'path';
 
 import { logger, parserReqBody} from './common/logger';
+import { handleAllErrors } from './lib/helpers/error';
 
 import usersRoutes from './routers/users.router';
 import boardsRoutes from './routers/boards.router';
@@ -26,6 +27,6 @@ app.register(usersRoutes);
 app.register(boardsRoutes);
 app.register(tasksRoutes, { prefix: '/boards/:boardId' });
 
-
+app.setErrorHandler(handleAllErrors);
 
 export default app;
