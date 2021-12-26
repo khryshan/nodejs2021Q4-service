@@ -4,6 +4,7 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 const config = {
   transport: {
     target: 'pino-pretty',
+    level: 'info',
     options: {
       colorize: true,
       translateTime: 'SYS:dd-mm-yyyy HH:MM:ss',
@@ -36,6 +37,13 @@ const config = {
 export const parserReqBody = (request: FastifyRequest, _: FastifyReply, done: () => void) => {
   if (request.body) {
     request.log.info({ body: request.body }, 'parsed request body')
+  }
+  done();
+};
+
+export const parserResError = (_: FastifyRequest, reply: FastifyReply, done: () => void) => {
+  if (reply.statusCode >= 400 && reply.statusCode < 500) {
+    reply.log.warn({"res":{"statusCode":reply.statusCode}});
   }
   done();
 };
