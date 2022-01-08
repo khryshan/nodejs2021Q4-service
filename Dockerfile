@@ -1,13 +1,16 @@
 FROM node:16-alpine
 
-WORKDIR /app/
+WORKDIR /app
 
 COPY package.json package-lock.json ./
 RUN npm install
+# RUN npm install --no-optional && npm cache clean --force
 
 COPY . .
 
-EXPOSE 4000
+ENV FASTIFY_HOST=0.0.0.0
 
-ENTRYPOINT [ "npm" ]
-CMD [ "run", "dev" ]
+EXPOSE ${PORT}
+
+ENTRYPOINT [ "npm", "run", "dev" ]
+# CMD [ "run", "dev" ]

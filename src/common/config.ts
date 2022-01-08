@@ -21,7 +21,7 @@ export const {
 } = process.env;
 
 export const PORT: string | number = process.env.PORT || 4000;
-export const HOST: string = process.env.HOST || '0.0.0.0';
+export const FASTIFY_HOST: string = process.env.FASTIFY_HOST || '';
 
 export const LOG_LEVEL: string = LogLevels[process.env.LOG_LEVEL as keyof typeof LogLevels || '4'];
 

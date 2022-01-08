@@ -1,6 +1,14 @@
-node_modules
-test
+/node_modules
+
+/test
+# /doc
 /logs/*.log
 
-.gitignore
+.git
+.github
+.vscode
+
 .env
+
+*.md
+!README*.md
