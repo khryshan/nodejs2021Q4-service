@@ -39,9 +39,6 @@ services:
 networks:
   custom-network:
     driver: bridge
-    # ipam:
-    #   config:
-    #     - subnet: 0.0.0.0/4
 
 volumes:
   nodemodules:

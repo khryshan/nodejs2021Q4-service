@@ -21,6 +21,9 @@ app.register(swagger, {
   }
 });
 
+// HELPER: If an error occurs, the container should restart automatically
+// setTimeout(()=>{ throw new Error('oops!')}, 2000);
+
 process.on('uncaughtException', handleFatalError);
 process.on('unhandledRejection', handleFatalError);
 

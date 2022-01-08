@@ -11,9 +11,22 @@
   "scripts": {
     "start": "ts-node src/server.ts",
     "dev": "ts-node-dev --poll --respawn src/server.ts",
+    "dev2": "nodemon src/server.ts --exitcrash -L",
     "lint": "eslint --ext .js,.ts --fix src/",
     "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
     "test:auth": "crosss-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "ext": "ts",
+    "ignore": [
+      "*.test.ts"
+    ],
+    "execMap": {
+      "ts": "ts-node"
+    }
   },
   "keywords": [
     "rs",
