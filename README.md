@@ -27,6 +27,23 @@ After starting the app on port (4000 as default) you can open
 in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
 For more information about OpenAPI/Swagger please visit https://swagger.io/.
 
+## Running application in docker
+
+This instruction assumes you have a current version of Docker installed on your machine. If you do not have Docker installed, install Docker on your machine.
+
+Choose your preferred operating system link below to download Docker:
+- DOCKER - [Download](https://docs.docker.com/get-started/#download-and-install-docker).
+
+For Docker Desktop installation instructions, see [Install Docker Desktop on Mac](https://docs.docker.com/desktop/mac/install/) and  [Install Docker Desktop on Windows](https://docs.docker.com/desktop/windows/install/).
+
+Then open a command prompt or bash window, and run the commands:
+
+- Build components `docker-compose build` (in `nodejs2021Q4-service` directory);
+
+- Run project `docker-compose up`.
+
+After starting, the application is on port 4000 (as default) 
+
 ## Testing
 
 After application running open new terminal and enter:
