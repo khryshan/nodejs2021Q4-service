@@ -18,7 +18,7 @@ services:
     volumes:
       - ./src:/app/src    
       - nodemodules:/app/node_modules
-      - ./logs:/app/logs
+      - logs:/app/logs
   db:
     image: postgres-db
     container_name: postgres-db
@@ -42,4 +42,5 @@ networks:
 
 volumes:
   nodemodules:
+  logs:
   postgres_db:
