@@ -13,3 +13,4 @@ ENV FASTIFY_HOST=0.0.0.0
 EXPOSE ${PORT}
 
 ENTRYPOINT [ "npm", "run", "dev2" ]
+# CMD ["nodemon", "./src/server.ts", "--exitcrash", "-L"]

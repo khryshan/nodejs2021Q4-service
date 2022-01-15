@@ -1,9 +1,11 @@
+import 'reflect-metadata';
 import fastify, { FastifyInstance } from 'fastify';
 import swagger from 'fastify-swagger';
 import path from 'path';
 
 import { logger, parserReqBody, parserResError } from './common/logger';
 import { handleAllErrors, handleFatalError } from './lib/helpers/error';
+import pluginConnectionDB from './db/pluginConnectionDB';
 
 import usersRoutes from './routers/users.router';
 import boardsRoutes from './routers/boards.router';
@@ -29,6 +31,8 @@ process.on('unhandledRejection', handleFatalError);
 
 app.addHook('preHandler', parserReqBody);
 app.addHook('onResponse', parserResError);
+
+app.register(pluginConnectionDB);
 
 app.register(usersRoutes);
 app.register(boardsRoutes);
