@@ -104,7 +104,7 @@ export const deleteUser = async (
 ): Promise<void> => {
   const { userId } = request.params;
 
-  const result: boolean = deleteUserData(userId);
+  const result = await deleteUserData(userId);
   await updateTasks((task) => {
     if(task.userId === userId) {
       return { ...task, userId: null };

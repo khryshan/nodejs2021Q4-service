@@ -2,14 +2,6 @@ import { getRepository } from 'typeorm';
 import { User } from '../db/entities/User';
 import { IUser } from '../types';
 
-let users: Array<IUser> = [
-  {
-    id: 'c106a26a-21bb-5538-8bf2-57095d1976c1',
-    login: 'JW',
-    name: 'John_Wick',
-    password: '12345678900'
-  }
-];
 
 /**
  * Returns all users
@@ -71,15 +63,15 @@ export const updateUserData = async (
  * @param {string} id - identifier of a user
  * @returns boolean value (true or false), was removed object or not
  */
-export const deleteUserData = (id: string): boolean => {
+export const deleteUserData = async (id: string): Promise<boolean> => {
   let result = false;
-  users = users.filter((user: IUser):boolean => {
-    if(user.id !== id) {
-      return true;
-    }
-      result = true;
-      return false;
-  });
+  const repository = getRepository(User);
+  const currentUser = await repository.findOne(id);
+
+  if (currentUser) {
+    await repository.delete(id);
+    result = true
+  }
 
   return result;
 };
