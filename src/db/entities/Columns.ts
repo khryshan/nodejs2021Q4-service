@@ -1,6 +1,11 @@
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn
+} from "typeorm";
 import { Board } from "./Boards";
-
 
 @Entity({ name: 'column' })
 export class Columns extends BaseEntity {
@@ -15,12 +20,9 @@ export class Columns extends BaseEntity {
   order!: number;
 
   @ManyToOne(
-    () => Board, 
-    board => board.columns, 
-    { onDelete: 'CASCADE' }
+    () => Board,
+    board => board.columns,
+    {onDelete: 'CASCADE'}
   )
-  board!: Board;
-
-  // @Column('uuid')
-  // boardId!: string;
+  boardId!: string;
 }

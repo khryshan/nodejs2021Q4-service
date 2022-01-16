@@ -46,15 +46,15 @@ export const addNewBoard = async (newBoard: IBoard): Promise<void> => {
 export const updateBoardData = async (
   id:string,
   data:IBoard
-):Promise<IBoard | undefined> => {
-  const repository = getRepository(Board);
-  const currentBoard = await repository.findOne(id);
+  ):Promise<IBoard | undefined> => {
+    const repository = getRepository(Board);
+    let currentBoard = await repository.findOne(id);
 
   if (currentBoard) {
-    await repository.update(id, {...currentBoard, ...data});
+    currentBoard = Object.assign(currentBoard, data)
+    await repository.save(currentBoard)
   }
-  const updatedBoard = await repository.findOne(id)
-  return updatedBoard;
+  return currentBoard;
 };
 
 /**

@@ -7,7 +7,7 @@ export interface IUser {
 
 export interface IColumn {
   title?: string,
-   order?: number
+  order?: number
 };
 
 export interface IBoard {

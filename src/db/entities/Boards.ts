@@ -1,4 +1,10 @@
-import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn
+} from "typeorm";
 import { Columns } from "./Columns";
 
 @Entity('board')
@@ -11,10 +17,9 @@ export class Board extends BaseEntity {
   title!: string;
 
   @OneToMany(
-    () => Columns, 
-    column => column.board, 
-    { onDelete: 'CASCADE' }
+    () => Columns,
+    column => column.boardId,
+    { cascade: true, onDelete: 'CASCADE', eager: true }
   )
-  columns!: Columns[];
-
+  columns!: Columns[]
 }
