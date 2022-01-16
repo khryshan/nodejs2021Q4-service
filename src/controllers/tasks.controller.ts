@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { v4 as uuidv4, validate as uuidValidate } from 'uuid'; 
-import { addNewTask, deleteTaskData, getAllTasks, updateTaskData } from '../database/tasks.memory.repository';
+import { addNewTask, deleteTaskData, getAllTasks, updateTaskData } from '../repositories/tasks.memory.repository';
 import { ITask } from '../types';
 
 type CustomTasksRequest = FastifyRequest<{

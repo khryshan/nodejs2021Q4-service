@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
-import { updateTasks } from '../database/tasks.memory.repository';
-import { addNewUser, getAllUsers, updateUserData, deleteUserData } from '../database/users.memory.repository';
+import { updateTasks } from '../repositories/tasks.memory.repository';
+import { addNewUser, getAllUsers, getUserById, updateUserData, deleteUserData } from '../repositories/users.memory.repository';
 import { IUser } from '../types';
 
 type CustomUsersRequest = FastifyRequest<{
@@ -21,7 +21,7 @@ export const getUsers = async (
   request: CustomUsersRequest,
   reply: FastifyReply
 ): Promise<void> => {
-  const users: Array<IUser> = getAllUsers();
+  const users = await getAllUsers();
   reply.send(users);
 };
 
@@ -39,12 +39,11 @@ export const getUser = async (
   request: CustomUsersRequest,
   reply: FastifyReply
 ): Promise<void> => {
-  const users: Array<IUser> = getAllUsers();
   const { userId } = request.params;
-  const currentUser: Array<IUser> = users.filter((user: IUser):boolean => (user.id === userId));
+  const currentUser = await getUserById(userId);
 
-  if (currentUser?.length !== 0) {
-    reply.send(currentUser[0]);
+  if (currentUser) {
+    reply.send(currentUser);
   } else {
     reply.code(404).send({message: 'Not Found'});
   };
@@ -85,8 +84,7 @@ export const updateUser = async (
   const { userId } = request.params;
   const newUserData = request.body;
 
-  const updatedUser: IUser = updateUserData(userId, newUserData);
-
+  const updatedUser = await updateUserData(userId, newUserData);
   reply.send(updatedUser)
 };
 

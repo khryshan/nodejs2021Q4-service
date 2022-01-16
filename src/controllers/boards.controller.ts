@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
-import { deleteTasksOfBoard } from '../database/tasks.memory.repository';
-import { addNewBoard, deleteBoardData, getAllBoards, updateBoardData } from '../database/boards.memory.repository';
+import { deleteTasksOfBoard } from '../repositories/tasks.memory.repository';
+import { addNewBoard, deleteBoardData, getAllBoards, updateBoardData } from '../repositories/boards.memory.repository';
 import { IBoard } from '../types';
 
 
