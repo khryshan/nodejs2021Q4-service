@@ -1,21 +1,26 @@
+import { getRepository } from 'typeorm';
+import { Board } from '../db/entities/Boards';
 import { IBoard } from '../types';
-
-let boards:Array<IBoard> = [
-  {
-    id: '6ec0bd7f-11c0-43da-975e-2a8ad9ebae0b',
-    title: 'Autotest board',
-    columns: [
-      { title: 'Backlog', order: 1 },
-      { title: 'Sprint', order: 2 }
-    ]
-  },
-];
 
 /**
  * Returns all boards
- * @returns Array of all boards (type {@link IBoard}) or empty array
+ * @returns All boards (type Promise<Array<IBoard>> {@link IBoard})
  */
-export const getAllBoards = ():Array<IBoard> => boards;
+export const getAllBoards = async ():Promise<Array<IBoard>> => {
+  const repository = getRepository(Board);
+  const allBoards = await repository.find();
+  return allBoards;
+};
+
+/**
+ * Returns board
+ * @returns Board (type Promise<IBoard | undefined> {@link IBoard})
+ */
+ export const getBoardById = async (id: string):Promise<IBoard | undefined> => {
+  const repository = getRepository(Board);
+  const currentBoard = await repository.findOne(id);
+  return currentBoard;
+};
 
 /**
  * Saves a new board
@@ -24,33 +29,31 @@ export const getAllBoards = ():Array<IBoard> => boards;
  * push a new object of board to array of boards
  * 
  * @param newBoard {@link IBoard} - data of the new board
- * @returns {void} does not return any value
+ * @returns Promise<void>
  */
-export const addNewBoard = (newBoard:IBoard):void => {
-  boards = [...boards, newBoard];
+export const addNewBoard = async (newBoard: IBoard): Promise<void> => {
+  const repository = getRepository(Board);
+  const newBoardDB = repository.create(newBoard);
+  await repository.save(newBoardDB);
 };
 
 /**
  * Updates a date of existing board
  * @param {string} id - identifier of a board
  * @param data {@link IBoard} - new data of the board, which needs update
- * @returns object of the updated board (type {@link IBoard})
+ * @returns Board (type Promise<IBoard | undefined> {@link IBoard})
  */
-export const updateBoardData = (id:string, data:IBoard):IBoard => {
-  let updatedBoard:IBoard = {};
-  
-  boards = boards.map((board:IBoard):IBoard => {
-    if (board.id === id) {
-      updatedBoard = {
-        ...board,
-        ...data
-      };
-      return updatedBoard
-    }
+export const updateBoardData = async (
+  id:string,
+  data:IBoard
+):Promise<IBoard | undefined> => {
+  const repository = getRepository(Board);
+  const currentBoard = await repository.findOne(id);
 
-    return board;
-  });
-
+  if (currentBoard) {
+    await repository.update(id, {...currentBoard, ...data});
+  }
+  const updatedBoard = await repository.findOne(id)
   return updatedBoard;
 };
 
@@ -59,15 +62,15 @@ export const updateBoardData = (id:string, data:IBoard):IBoard => {
  * @param {string} id - identifier of a board
  * @returns boolean value (true or false), was removed object or not
  */
-export const deleteBoardData = (id: string):boolean => {
+export const deleteBoardData = async (id: string):Promise<boolean> => {
   let result = false;
-  boards = boards.filter((board:IBoard):boolean => {
-    if(board.id !== id) {
-      return true;
-    }
-      result = true;
-      return false;
-  });
+  const repository = getRepository(Board);
+  const currentBoard = await repository.findOne(id);
+
+  if (currentBoard) {
+    await repository.delete(id);
+    result = true
+  }
 
   return result;
 };

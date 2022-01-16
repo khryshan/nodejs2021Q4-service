@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
 import { deleteTasksOfBoard } from '../repositories/tasks.memory.repository';
-import { addNewBoard, deleteBoardData, getAllBoards, updateBoardData } from '../repositories/boards.memory.repository';
+import { addNewBoard, deleteBoardData, getAllBoards, getBoardById, updateBoardData } from '../repositories/boards.memory.repository';
 import { IBoard } from '../types';
 
 
@@ -22,7 +22,7 @@ export const getBoards = async (
   request: CustomBoardsRequest,
   reply: FastifyReply
 ): Promise<void> => {
-  const boards: Array<IBoard> = getAllBoards();
+  const boards = await getAllBoards();
   reply.send(boards);
 };
 
@@ -40,12 +40,11 @@ export const getBoard = async (
   request: CustomBoardsRequest,
   reply: FastifyReply
 ): Promise<void> => {
-  const boards: Array<IBoard> = getAllBoards();
   const { boardId } = request.params;
-  const currentBoard: Array<IBoard> = boards.filter((board: IBoard):boolean => (board.id === boardId));
+  const currentBoard = await getBoardById(boardId);
   
-  if (currentBoard?.length !== 0) {
-    reply.send(currentBoard[0]);
+  if (currentBoard) {
+    reply.send(currentBoard);
   } else {
     reply.code(404).send({message: 'Not Found'});
   };
@@ -68,7 +67,7 @@ export const addBoard = async (
     columns
   };
   
-  addNewBoard(newBoard);
+  await addNewBoard(newBoard);
   reply.code(201).send(newBoard);
 };
 
@@ -85,8 +84,7 @@ export const updateBoard = async (
   const { boardId } = request.params;
   const newBoardData = request.body;
 
-  const updatedBoard: IBoard = updateBoardData(boardId, newBoardData);
-
+  const updatedBoard = await updateBoardData(boardId, newBoardData);
   reply.send(updatedBoard)
 };
 
@@ -105,7 +103,7 @@ export const deleteBoard = async (
   reply: FastifyReply
 ): Promise<void> => {
   const { boardId } = request.params;
-  const result: boolean = deleteBoardData(boardId);
+  const result = await deleteBoardData(boardId);
   await deleteTasksOfBoard(boardId);
 
   if(result) {

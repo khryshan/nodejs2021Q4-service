@@ -67,7 +67,7 @@ export const addUser = async (
     password
   };
   
-  addNewUser(newUser);
+  await addNewUser(newUser);
   reply.code(201).send(newUser);
 };
 
