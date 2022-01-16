@@ -15,12 +15,12 @@ export class Task extends BaseEntity {
   @Column({ type: 'varchar', length: 200 })
   description!: string;
 
-  @Column({ type: 'varchar', length: 36 })
-  userId!: string;
+  @Column({ type: 'varchar', length: 36, nullable: true })
+  userId!: string | null;
 
-  @Column({ type: 'varchar', length: 36 })
-  boardId!: string;
+  @Column({ type: 'varchar', length: 36, nullable: true })
+  boardId!: string | null;
 
-  @Column({ type: 'varchar', length: 36 })
-  columnId!: string;
+  @Column({ type: 'varchar', length: 36, nullable: true })
+  columnId!: string | null;
 }

@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
-import { updateTasks } from '../repositories/tasks.memory.repository';
+import { setDefaultUserId } from '../repositories/tasks.memory.repository';
 import { addNewUser, getAllUsers, getUserById, updateUserData, deleteUserData } from '../repositories/users.memory.repository';
 import { IUser } from '../types';
 
@@ -105,12 +105,8 @@ export const deleteUser = async (
   const { userId } = request.params;
 
   const result = await deleteUserData(userId);
-  await updateTasks((task) => {
-    if(task.userId === userId) {
-      return { ...task, userId: null };
-    };
-    return task;
-  })
+  
+  await setDefaultUserId(userId)
 
   if(result) {
     reply.send({message: 'User has been removed'});

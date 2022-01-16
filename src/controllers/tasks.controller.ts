@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { v4 as uuidv4, validate as uuidValidate } from 'uuid'; 
-import { addNewTask, deleteTaskData, getAllTasks, updateTaskData } from '../repositories/tasks.memory.repository';
+import { addNewTask, deleteTaskData, getAllTasks, getTaskById, updateTaskData } from '../repositories/tasks.memory.repository';
 import { ITask } from '../types';
 
 type CustomTasksRequest = FastifyRequest<{
@@ -46,7 +46,7 @@ export const getTasks = async (
     const { boardId } = request.params;
     validatedId([boardId]);
     
-    const tasks: Array<ITask> = getAllTasks();
+    const tasks = await getAllTasks(boardId);
     reply.send(tasks);
   } catch(err){
     reply.code(404).send({message: (err as Error).message});
@@ -70,11 +70,10 @@ export const getTask = async (
   try {
     const { boardId, taskId } = request.params;
     validatedId([boardId, taskId]);
-    const tasks: Array<ITask> = getAllTasks();
-    const currentTask: Array<ITask> = tasks.filter((task:ITask):boolean => (task.id === taskId));
+    const currentTask = await getTaskById(taskId);
     
-    if (currentTask?.length !== 0) {
-      reply.send(currentTask[0]);
+    if (currentTask) {
+      reply.send(currentTask);
     } else {
       reply.code(404).send({message: 'Not Found'});
     };
@@ -118,7 +117,7 @@ export const addTask = async (
       columnId
     };
     
-    addNewTask(newTask);
+    await addNewTask(newTask);
     reply.code(201).send(newTask);
   } catch (err) {
     reply.code(404).send({message: (err as Error).message});
@@ -143,7 +142,7 @@ export const updateTask = async (
     const { boardId, taskId } = request.params;
     validatedId([boardId, taskId]);
     const newTaskData = request.body;
-    const updatedTask: ITask = updateTaskData(taskId, newTaskData);
+    const updatedTask = await updateTaskData(taskId, newTaskData);
 
     reply.send(updatedTask)
   } catch(err){
@@ -169,7 +168,7 @@ export const deleteTask = async (
     const { boardId, taskId } = request.params;
     validatedId([boardId, taskId]);
 
-    const result: boolean = deleteTaskData(taskId);
+    const result = await deleteTaskData(taskId);
   
     if(result) {
       reply.send({message: 'Task has been removed'});
