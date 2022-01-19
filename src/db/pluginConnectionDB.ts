@@ -1,12 +1,12 @@
 import { createConnection, Connection } from 'typeorm';
 import fp from 'fastify-plugin';
 
-import ORMConfig from './ormconfig';
 import { logger } from '../common/logger';
 
 const connectDB = async (): Promise<Connection> => (
-  createConnection(ORMConfig)
-    .then((connection) => {
+  createConnection()
+    .then(async (connection) => {
+      await connection.runMigrations();
       logger.info('Connected to database successfully! 🔗');
       return connection;
   })

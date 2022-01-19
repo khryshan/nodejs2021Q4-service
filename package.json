@@ -14,7 +14,12 @@
     "dev2": "nodemon src/server.ts --exitcrash -L",
     "lint": "eslint --ext .js,.ts --fix src/",
     "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
-    "test:auth": "crosss-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace"
+    "test:auth": "crosss-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace",
+    "migrate": "ts-node ./node_modules/typeorm/cli.js migration:run",
+    "revert": "ts-node ./node_modules/typeorm/cli.js migration:revert",
+    "generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -n migration -p",
+    "generate-dry": "ts-node ./node_modules/typeorm/cli.js migration:generate -n migration -p --dr",
+    "make-migration": "npx typeorm migration:create -n migrationName"
   },
   "nodemonConfig": {
     "watch": [
