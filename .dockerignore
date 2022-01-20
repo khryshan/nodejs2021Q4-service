@@ -1,0 +1,14 @@
+/node_modules
+
+/test
+# /doc
+/logs/*.log
+
+.git
+.github
+.vscode
+
+.env
+
+*.md
+!README*.md
