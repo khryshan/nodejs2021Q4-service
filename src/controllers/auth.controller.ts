@@ -1,10 +1,32 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
+import jwt from 'jsonwebtoken';
 
+import { findUserData } from '../repositories/users.memory.repository';
+import { SECRET_KEY_JWT } from '../lib/constants';
 import { IAuth } from '../types';
 
 type CustomAuthRequest = FastifyRequest<{
   Body: IAuth;
 }>;
+
+
+/**
+ * Handles getting user token
+ * @param {string} loginUser - user login
+ * @returns Promise<string | null>
+ */
+const getUserToken = async (loginUser: string): Promise<string | null> => {
+  const user = await findUserData(loginUser || '');
+
+  if(!user) {
+    return null;
+  }
+
+  const { id, login } = user;
+  const token = jwt.sign({ id, login }, SECRET_KEY_JWT);
+
+  return token;
+}
 
 /**
  * Handles getting list of users and using as reply of the request
@@ -12,15 +34,17 @@ type CustomAuthRequest = FastifyRequest<{
  * @param reply {@link FastifyReply} - response of query
  * @returns Promise<void>
  */
-export const loginUser = async (
+export const authUser = async (
   request: CustomAuthRequest,
   reply: FastifyReply
 ): Promise<void> => {
-  // const { login, password } = request.body;
+  const { login = '' } = request.body;
 
-  const data = {
-    token: "new-token"
+  const token = await getUserToken(login);
+  
+  if(!token) {
+    reply.code(403).send({message: 'Access forbidden'});
+  } else {
+    reply.code(200).send({token});
   }
-  // const users = await getAllUsers();
-  reply.send(data);
 };

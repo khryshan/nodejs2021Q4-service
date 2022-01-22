@@ -24,4 +24,5 @@ export const URLS = {
   DELETE_TASK: '/tasks/:taskId'
 }
 
-export const SALT_ROUNDS = 10
+export const SALT_ROUNDS = 10;
+export const SECRET_KEY_JWT = 'shhhhh';

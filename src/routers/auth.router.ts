@@ -1,7 +1,7 @@
 import { FastifyInstance, FastifyPluginAsync } from 'fastify';
 
 import { URLS } from '../lib/constants';
-import { loginUser } from '../controllers/auth.controller';
+import { authUser } from '../controllers/auth.controller';
 
 const { LOGIN } = URLS;
 
@@ -24,7 +24,7 @@ const loginOpts = {
       }
     },
   },
-  handler: loginUser
+  handler: authUser
 };
 
 /**

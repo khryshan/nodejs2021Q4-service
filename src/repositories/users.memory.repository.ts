@@ -75,3 +75,17 @@ export const deleteUserData = async (id: string): Promise<boolean> => {
 
   return result;
 };
+
+/**
+ * Look for user into DB
+ * @param {string} login - login of a user
+ * @returns User (type Promise<IUser | undefined> {@link IUser})
+ */
+ export const findUserData = async (login: string): Promise<IUser | undefined> => {
+ 
+  const repository = getRepository(User);
+  const currentUser = await repository.findOne({ login });
+
+  return currentUser;
+};
+
