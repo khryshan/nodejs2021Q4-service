@@ -47,7 +47,7 @@ export const authUser = async (
   const token = await getUserToken(login, password);
   
   if(!token) {
-    reply.code(403).send({message: 'Access forbidden'});
+    reply.code(403).send({message: 'Access forbidden: wrong login or password'});
   } else {
     reply.code(200).send({token});
   }

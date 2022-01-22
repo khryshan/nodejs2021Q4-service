@@ -52,11 +52,10 @@ const transport = pino.transport(<TransportMultiOptions>{
   }]
 });
 
-export const parserReqBody = (request: FastifyRequest, _: FastifyReply, done: () => void) => {
+export const parserReqBody = (request: FastifyRequest) => {
   if (request.body) {
     request.log.info({ body: request.body }, 'parsed request body')
   }
-  done();
 };
 
 export const parserResError = (_: FastifyRequest, reply: FastifyReply, done: () => void) => {

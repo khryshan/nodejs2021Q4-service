@@ -3,6 +3,7 @@ import fastify, { FastifyInstance } from 'fastify';
 import swagger from 'fastify-swagger';
 import path from 'path';
 
+import { checkAuthToken } from './common/checkAuthToken';
 import { logger, parserReqBody, parserResError } from './common/logger';
 import { handleAllErrors, handleFatalError } from './lib/helpers/error';
 import pluginConnectionDB from './db/pluginConnectionDB';
@@ -30,7 +31,12 @@ app.register(swagger, {
 process.on('uncaughtException', handleFatalError);
 process.on('unhandledRejection', handleFatalError);
 
-app.addHook('preHandler', parserReqBody);
+app.addHook('preHandler', (request, reply, done) => {
+  parserReqBody(request);
+  checkAuthToken(request, reply);
+  done();
+});
+
 app.addHook('onResponse', parserResError);
 
 app.register(pluginConnectionDB);

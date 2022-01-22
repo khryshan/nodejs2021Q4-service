@@ -26,3 +26,5 @@ export const URLS = {
 
 export const SALT_ROUNDS = 10;
 
+export const WHITE_LIST_ROUTERS = ['/', '/login', '/doc'];
+
