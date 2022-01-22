@@ -8,3 +8,12 @@ export const genHashPassword = async (password: string): Promise<string> => {
 
   return hash;
 };
+
+export const validatePassword = async (
+  password: string,
+  hash: string
+): Promise<boolean> => {
+  const result = await bcrypt.compare(password, hash);
+  
+  return result;
+}
