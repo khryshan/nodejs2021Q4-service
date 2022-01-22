@@ -16,9 +16,10 @@ const LogLevels = {
 
 export const {
   NODE_ENV,
-  MONGO_CONNECTION_STRING,
-  JWT_SECRET_KEY
+  MONGO_CONNECTION_STRING
 } = process.env;
+
+export const JWT_SECRET_KEY: string = process.env.JWT_SECRET_KEY || 'secret';
 
 export const PORT: string | number = process.env.PORT || 4000;
 export const FASTIFY_HOST: string = process.env.FASTIFY_HOST || '';

@@ -25,4 +25,4 @@ export const URLS = {
 }
 
 export const SALT_ROUNDS = 10;
-export const SECRET_KEY_JWT = 'shhhhh';
+

@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 import { findUserData } from '../repositories/users.memory.repository';
 import { validatePassword } from '../lib/helpers/hashHelper';
-import { SECRET_KEY_JWT } from '../lib/constants';
+import { JWT_SECRET_KEY } from '../common/config';
 import { IAuth } from '../types';
 
 type CustomAuthRequest = FastifyRequest<{
@@ -22,12 +22,12 @@ const getUserToken = async (loginUser: string, password: string): Promise<string
 
   if(!user) return null;
 
-  const { id, login, password: hashedPassword = '' } = user;
+  const { id: userId, login, password: hashedPassword = '' } = user;
   const isValidePassword = await validatePassword(password, hashedPassword);
 
   if(!isValidePassword) return null;
 
-  const token = jwt.sign({ id, login }, SECRET_KEY_JWT);
+  const token = jwt.sign({ userId, login }, JWT_SECRET_KEY);
 
   return token;
 }
