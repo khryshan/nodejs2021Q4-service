@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
 import { setDefaultUserId } from '../repositories/tasks.memory.repository';
 import { addNewUser, getAllUsers, getUserById, updateUserData, deleteUserData } from '../repositories/users.memory.repository';
+import { genHashPassword } from '../lib/helpers/hashHelper';
 import { IUser } from '../types';
 
 type CustomUsersRequest = FastifyRequest<{
@@ -59,13 +60,15 @@ export const addUser = async (
   request: CustomUsersRequest,
   reply: FastifyReply
 ): Promise<void> => {
-  const { login, name, password } = request.body;
+  const { login, name, password = ''} = request.body;
+  const hashedPassword = await genHashPassword(password);
+
   const newUser: IUser = {
     id: uuidv4(),
     login,
     name,
-    password
-  };
+    password: hashedPassword
+  };  
   
   await addNewUser(newUser);
   reply.code(201).send(newUser);

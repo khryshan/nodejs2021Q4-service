@@ -1,5 +1,8 @@
 export const URLS = {
-  // /users
+  // login
+  LOGIN: '/login',
+
+  // users
   GET_USERS: '/users',
   GET_USER: '/users/:userId',
   ADD_USER: '/users',
@@ -20,3 +23,5 @@ export const URLS = {
   UPDATE_TASK: '/tasks/:taskId',
   DELETE_TASK: '/tasks/:taskId'
 }
+
+export const SALT_ROUNDS = 10
