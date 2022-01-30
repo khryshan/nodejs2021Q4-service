@@ -1,13 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+  HttpCode,
+  HttpException,
+  HttpStatus
+} from '@nestjs/common';
 import { UsersService } from './users.service';
+import { TasksService } from '../tasks/tasks.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly tasksService: TasksService
+  ) {}
 
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
@@ -18,17 +34,34 @@ export class UsersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const currentUser = await this.usersService.findOne(id);
+    if (currentUser) {
+      return currentUser;
+    }
+    throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    const updatedUser = await this.usersService.update(id, updateUserDto);
+    if (updatedUser) {
+      return updatedUser;
+    }
+    throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async remove(@Param('id') id: string) {
+
+    const result = await this.usersService.remove(id);
+    
+    await this.tasksService.setDefaultUserId(id);
+
+    if(result) {
+      return ({message: 'User has been removed'});
+    }
+    throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
   }
 }

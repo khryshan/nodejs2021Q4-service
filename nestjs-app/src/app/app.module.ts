@@ -5,6 +5,8 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from '../users/users.module';
+import { BoardsModule } from '../boards/boards.module';
+import { TasksModule } from '../tasks/tasks.module';
 import { getTypeOrmConfig } from '../common/app.dbconfig';
 
 
@@ -14,7 +16,9 @@ import { getTypeOrmConfig } from '../common/app.dbconfig';
       envFilePath: '.env '
     }),
     TypeOrmModule.forRoot(getTypeOrmConfig()),
-    UsersModule
+    UsersModule,
+    BoardsModule,
+    TasksModule
   ],
   controllers: [AppController],
   providers: [AppService],
