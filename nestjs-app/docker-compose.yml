@@ -18,7 +18,7 @@ services:
     volumes:
       - ./src:/app/src    
       - nodemodules:/app/node_modules
-      # - logs:/app/logs
+      - logs:/app/logs
   nestjs_db:
     image: postgres_db
     container_name: postgres_db
@@ -42,5 +42,5 @@ networks:
 
 volumes:
   nodemodules:
-  # logs:
+  logs:
   postgres_db:

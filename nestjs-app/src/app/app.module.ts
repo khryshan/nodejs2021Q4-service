@@ -35,13 +35,39 @@ import { LOG_LEVEL } from '../common/app.config';
           }
         },
         transport: {
-          target: 'pino-pretty',
-          options: {
-            colorize: true,
-            translateTime: 'SYS:dd-mm-yyyy HH:MM:ss',
-            ignore: 'pid,hostname,reqId,responseTime',
-            singleLine: true,
-          }
+          targets: [
+            {
+              level: 'info',
+              target: 'pino-pretty',
+              options: { 
+                destination: './logs/logs.log',
+                mkdir: true,
+                translateTime: 'SYS:dd-mm-yyyy HH:MM:ss',
+                ignore: 'pid,hostname,reqId',
+                singleLine: true,
+              }
+            }, {
+              level: 'error',
+              target: 'pino-pretty',
+              options: {
+                destination: './logs/errors.log',
+                mkdir: true,
+                translateTime: 'SYS:dd-mm-yyyy HH:MM:ss',
+                ignore: 'pid,hostname,reqId',
+                singleLine: true,
+              }
+            }, 
+            {
+              target: 'pino-pretty',
+              level: LOG_LEVEL,
+              options: {
+                colorize: true,
+                translateTime: 'SYS:dd-mm-yyyy HH:MM:ss',
+                ignore: 'pid,hostname,reqId,responseTime',
+                singleLine: true,
+              },
+            }
+          ],
         },
       }
     }),
