@@ -3,12 +3,14 @@ import { getRepository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { genHashPassword } from '../lib/helpers/hashHelper'
 
 @Injectable()
 export class UsersService {
   async create(createUserDto: CreateUserDto) {
     const repository = getRepository(User);
-    const newUserDB = repository.create(createUserDto);
+    const hashedPassword = await genHashPassword(createUserDto?.password);
+    const newUserDB = repository.create({...createUserDto, password: hashedPassword });
     await repository.save(newUserDB);
     return newUserDB;
   }
@@ -48,4 +50,11 @@ export class UsersService {
 
     return result;
   }
+
+  async getUserByLogin(login: string) {
+    const repository = getRepository(User);
+    const currentUser = await repository.findOne({ login });
+  
+    return currentUser;
+  };
 }

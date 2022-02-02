@@ -3,6 +3,8 @@ type LogLevel = "fatal" | "error" | "warn" | "info" | "debug" | "trace";
 
 export const PORT: string | number = process.env.PORT || 4000;
 
+export const JWT_SECRET_KEY: string = process.env.JWT_SECRET_KEY || 'secret';
+
 export const LOG_LEVEL: LogLevel = process.env.LOG_LEVEL as LogLevel|| 'info';
 
 export const POSTGRES_PORT: string | number = process.env.POSTGRES_PORT || 5432;

@@ -5,6 +5,7 @@ import { LoggerModule } from 'nestjs-pino';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from '../auth/auth.module';
 import { UsersModule } from '../users/users.module';
 import { BoardsModule } from '../boards/boards.module';
 import { TasksModule } from '../tasks/tasks.module';
@@ -72,6 +73,7 @@ import { LOG_LEVEL } from '../common/app.config';
       }
     }),
     TypeOrmModule.forRoot(getTypeOrmConfig()),
+    AuthModule,
     UsersModule,
     BoardsModule,
     TasksModule
