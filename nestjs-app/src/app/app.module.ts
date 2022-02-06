@@ -9,7 +9,7 @@ import { AuthModule } from '../auth/auth.module';
 import { UsersModule } from '../users/users.module';
 import { BoardsModule } from '../boards/boards.module';
 import { TasksModule } from '../tasks/tasks.module';
-import { getTypeOrmConfig } from '../common/app.dbconfig';
+import * as ormconfig from '../ormconfig';
 import { LOG_LEVEL } from '../common/app.config';
 
 
@@ -72,7 +72,7 @@ import { LOG_LEVEL } from '../common/app.config';
         },
       }
     }),
-    TypeOrmModule.forRoot(getTypeOrmConfig()),
+    TypeOrmModule.forRoot(ormconfig),
     AuthModule,
     UsersModule,
     BoardsModule,
