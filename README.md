@@ -122,14 +122,14 @@ For more information, visit: https://code.visualstudio.com/docs/editor/debugging
 ### Express
 
 | ------------------------------------------------------ | ------- |
-| errors.ECONNRESET:                                     | 4       |
+| errors.ECONNRESET: | 4 |
 | errors.ETIMEDOUT:                                      | 157     |
 | http.codes.200:                                        | 30      |
 | http.codes.201:                                        | 20      |
 | http.codes.204:                                        | 8       |
 | http.request_rate:                                     | 12/sec  |
 | http.requests:                                         | 219     |
-| http.response_time:                                              |
+| http.response_time:                                              
 |   min:                                                 | 4       |
 |   max:                                                 | 9810    |
 |   median:                                              | 144     |
