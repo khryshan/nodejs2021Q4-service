@@ -9,6 +9,7 @@ import { AuthModule } from '../auth/auth.module';
 import { UsersModule } from '../users/users.module';
 import { BoardsModule } from '../boards/boards.module';
 import { TasksModule } from '../tasks/tasks.module';
+import { FileModule } from '../file/file.module';
 import * as ormconfig from '../ormconfig';
 import { LOG_LEVEL } from '../common/app.config';
 
@@ -77,6 +78,7 @@ import { LOG_LEVEL } from '../common/app.config';
     UsersModule,
     BoardsModule,
     TasksModule,
+    FileModule,
   ],
   controllers: [AppController],
   providers: [AppService],
