@@ -121,50 +121,38 @@ For more information, visit: https://code.visualstudio.com/docs/editor/debugging
 
 ### Express
 
-| Name                | Value     |
-| ---                 |    :---:  |
-| errors.ECONNRESET:  | 4         |
-| errors.ETIMEDOUT:   | 157       |
-| http.codes.200:     | 30        |
-| http.codes.201:     | 20        |
-| http.codes.204:     | 8         |
-| http.request_rate:  | 12/sec    |
-| http.requests:      | 219       |
-| http.response_time: |           |
-| min:                | 4         |
-
-
-
-| ------------------------------------------------------ | ------- |
-| errors.ECONNRESET: | 4 |
+| Name                                                   | Value   |
+| ---                                                    |  :---:  |
+| errors.ECONNRESET:                                     | 4       |
 | errors.ETIMEDOUT:                                      | 157     |
 | http.codes.200:                                        | 30      |
 | http.codes.201:                                        | 20      |
 | http.codes.204:                                        | 8       |
 | http.request_rate:                                     | 12/sec  |
 | http.requests:                                         | 219     |
-| http.response_time:                                              
-|   min:                                                 | 4       |
-|   max:                                                 | 9810    |
-|   median:                                              | 144     |
-|   p95:                                                 | 9047.6  |
-|   p99:                                                 | 9230.4  |
+| http.response_time:                                    |         |
+| min:                                                   | 4       |
+| max:                                                   | 9810    |
+| median:                                                | 144     |
+| p95:                                                   | 9047.6  |
+| p99:                                                   | 9230.4  |
 | http.responses:                                        | 58      |
 | vusers.completed:                                      | 8       |
 | vusers.created:                                        | 169     |
 | vusers.created_by_name.check out /users entrypoint:    | 169     |
 | vusers.failed:                                         | 161     |
-| vusers.session_length:                                           |
-|   min:                                                 | 218.3   |
-|   max:                                                 | 18728.5 |
-|   median:                                              | 347.3   |
-|   p95:                                                 | 539.2   |
-|   p99:                                                 | 539.2   |
+| vusers.session_length:                                 |         |
+| min:                                                   | 218.3   |
+| max:                                                   | 18728.5 |
+| median:                                                | 347.3   |
+| p95:                                                   | 539.2   |
+| p99:                                                   | 539.2   |
 
 
 ### Fastify
 
-| ------------------------------------------------------ | ------- |
+| Name                                                   | Value   |
+| ---                                                    |  :---:  |
 | errors.ECONNRESET:                                     | 5       |
 | errors.ETIMEDOUT:                                      | 158     |
 | http.codes.200:                                        | 18      |
@@ -172,18 +160,18 @@ For more information, visit: https://code.visualstudio.com/docs/editor/debugging
 | http.codes.204:                                        | 4       |
 | http.request_rate:                                     | 12/sec  |
 | http.requests:                                         | 200     |
-| http.response_time:                                              |
-|   min:                                                 | 47      |
-|   max:                                                 | 6393    |
-|   median:                                              | 539.2   |
-|   p95:                                                 | 6187.2  |
-|   p99:                                                 | 6312.2  |
+| http.response_time:                                    |         |
+| min:                                                   | 47      |
+| max:                                                   | 6393    |
+| median:                                                | 539.2   |
+| p95:                                                   | 6187.2  |
+| p99:                                                   | 6312.2  |
 | http.responses:                                        | 37      |
 | vusers.completed:                                      | 4       |
 | vusers.created:                                        | 167     |
 | vusers.created_by_name.check out /users entrypoint:    | 167     |
 | vusers.failed:                                         | 163     |
-| vusers.session_length:                                           |
+| vusers.session_length:                                 |         |
 |   min:                                                 | 1150.7  |
 |   max:                                                 | 3088.1  |
 |   median:                                              | 1436.8  |
