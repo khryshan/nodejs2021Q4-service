@@ -1,6 +1,6 @@
 import pino, {Logger, TransportMultiOptions} from 'pino';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { LOG_LEVEL } from './config';
+import { LOG_LEVEL } from './app.config';
 
 
 const transport = pino.transport(<TransportMultiOptions>{
@@ -51,19 +51,6 @@ const transport = pino.transport(<TransportMultiOptions>{
     },
   }]
 });
-
-export const parserReqBody = (request: FastifyRequest) => {
-  if (request.body) {
-    request.log.info({ body: request.body }, 'parsed request body')
-  }
-};
-
-export const parserResError = (_: FastifyRequest, reply: FastifyReply, done: () => void) => {
-  if (reply.statusCode >= 400 && reply.statusCode < 500) {
-    reply.log.warn({"res":{"statusCode":reply.statusCode}});
-  }
-  done();
-};
 
 
 export const logger: Logger = pino(transport);

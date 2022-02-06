@@ -13,12 +13,10 @@ import { USE_FASTIFY, PORT } from './common/app.config';
 async function runFastify() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter({logger})
+    new FastifyAdapter({ logger }),
   );
   app.useLogger(app.get(Logger));
-  app.useGlobalInterceptors(new ClassSerializerInterceptor(
-    app.get(Reflector))
-  );
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
   await app.listen(PORT, '0.0.0.0');
 }
@@ -26,11 +24,11 @@ async function runFastify() {
 async function runExpress() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
   app.useLogger(app.get(Logger));
-  app.useGlobalInterceptors(new ClassSerializerInterceptor(
-    app.get(Reflector))
-  );
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
-  await app.listen(PORT, () => console.log(`Starting server on port = ${PORT} 🚀 `));
+  await app.listen(PORT, () =>
+    console.log(`Starting server on port = ${PORT} 🚀 `),
+  );
 }
 
 function bootstrap() {
