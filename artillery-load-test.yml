@@ -1,0 +1,57 @@
+config:
+  target: 'http://localhost:4000'
+  phases:
+    - duration: 10
+      arrivalRate: 2
+      rampTo: 100
+      name: Ramp up load
+
+before:
+  flow:
+    - log: 'get token'
+    - post:
+        url: '/login'
+        json:
+          login: 'admin'
+          password: 'admin'
+        capture:
+          - json: $.token
+            as: token
+
+scenarios:
+  - name: 'check out /users entrypoint'
+    flow:
+      - post:
+          url: '/users'
+          headers:
+            authorization: 'Bearer {{ token }}'
+          json:
+            name: 'user-1'
+            login: 'user-1'
+            password: '1234567890'
+          capture:
+            - json: '$.id'
+              as: 'userId'
+
+      - get:
+          url: '/users'
+          headers:
+            authorization: 'Bearer {{ token }}'
+
+      - get:
+          url: '/users/{{ userId }}'
+          headers:
+            authorization: 'Bearer {{ token }}'
+      
+      - put:
+          url: '/users/{{ userId }}'
+          headers:
+            authorization: 'Bearer {{ token }}'
+          json:
+            name: 'user-1_new-name'
+            login: 'user-1_new-login'
+
+      - delete:
+          url: '/users/{{ userId }}'
+          headers:
+            authorization: 'Bearer {{ token }}'
