@@ -121,6 +121,20 @@ For more information, visit: https://code.visualstudio.com/docs/editor/debugging
 
 ### Express
 
+| Name                | Value     |
+| ---                 |    :---:  |
+| errors.ECONNRESET:  | 4         |
+| errors.ETIMEDOUT:   | 157       |
+| http.codes.200:     | 30        |
+| http.codes.201:     | 20        |
+| http.codes.204:     | 8         |
+| http.request_rate:  | 12/sec    |
+| http.requests:      | 219       |
+| http.response_time: |           |
+| min:                | 4         |
+
+
+
 | ------------------------------------------------------ | ------- |
 | errors.ECONNRESET: | 4 |
 | errors.ETIMEDOUT:                                      | 157     |
@@ -146,7 +160,7 @@ For more information, visit: https://code.visualstudio.com/docs/editor/debugging
 |   median:                                              | 347.3   |
 |   p95:                                                 | 539.2   |
 |   p99:                                                 | 539.2   |
-| ------------------------------------------------------ | ------- |
+
 
 ### Fastify
 
@@ -175,5 +189,5 @@ For more information, visit: https://code.visualstudio.com/docs/editor/debugging
 |   median:                                              | 1436.8  |
 |   p95:                                                 | 1495.5  |
 |   p99:                                                 | 1495.5  |
-| ------------------------------------------------------ | ------- |
+
 
