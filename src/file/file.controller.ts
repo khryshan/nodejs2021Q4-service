@@ -5,13 +5,17 @@ import {
   Param,
   HttpCode,
   HttpStatus,
+  StreamableFile,
   UploadedFile,
   UseInterceptors,
+  UseGuards,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileService } from './file.service';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('file')
+@UseGuards(AuthGuard)
 export class FileController {
   constructor(private readonly fileService: FileService) {}
 
@@ -23,7 +27,8 @@ export class FileController {
   }
 
   @Get(':fileName')
-  findOne(@Param('fileName') fileName: string) {
-    return this.fileService.findOne(fileName);
+  async getFile(@Param('fileName') fileName: string) {
+    const file = await this.fileService.getFile(fileName);
+    return new StreamableFile(file);
   }
 }

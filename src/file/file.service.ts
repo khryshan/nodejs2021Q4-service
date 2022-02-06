@@ -1,28 +1,41 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import * as fs from 'fs';
-import * as path from 'path';
+import { createReadStream, existsSync, mkdirSync, writeFileSync } from 'fs';
+import { resolve, join } from 'path';
 
 @Injectable()
 export class FileService {
-  async uploadFile(file: Express.Multer.File) {
-    try {
-      const fileName = file.originalname;
-      const filePath = path.resolve(`${process.cwd()}/src/static`);
+  uploadFile(file: Express.Multer.File) {
+    const fileName = file.originalname;
 
-      if (!fs.existsSync(filePath)) {
-        fs.mkdirSync(filePath, { recursive: true });
+    try {
+      const filePath = resolve(`${process.cwd()}/src/static`);
+
+      if (!existsSync(filePath)) {
+        mkdirSync(filePath, { recursive: true });
       }
-      fs.writeFileSync(path.join(filePath, fileName), file.buffer);
+      writeFileSync(join(filePath, fileName), file.buffer);
     } catch (e) {
       throw new HttpException(
         'Internal server error',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
-    return 'File was uploaded!';
+
+    return `File ${fileName} was uploaded!`;
   }
 
-  findOne(fileName: string) {
-    return `This action returns a #${fileName} file`;
+  async getFile(fileName: string) {
+    try {
+      const file = createReadStream(
+        resolve(`${process.cwd()}/src/static`, fileName),
+      );
+
+      return file;
+    } catch (e) {
+      throw new HttpException(
+        'Internal server error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }
