@@ -10,6 +10,8 @@ import {
   HttpException,
   HttpStatus,
   UseGuards,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { TasksService } from '../tasks/tasks.service';
@@ -19,6 +21,7 @@ import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('users')
 @UseGuards(AuthGuard)
+@UsePipes(new ValidationPipe({ transform: true }))
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
@@ -38,11 +41,15 @@ export class UsersController {
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    const currentUser = await this.usersService.findOne(id);
-    if (currentUser) {
-      return currentUser;
+    try {
+      const currentUser = await this.usersService.findOne(id);
+      if (currentUser) {
+        return currentUser;
+      }
+      throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+    } catch (e) {
+      console.log('____e: ', e);
     }
-    throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
   }
 
   @Put(':id')

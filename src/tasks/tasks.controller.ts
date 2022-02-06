@@ -11,6 +11,8 @@ import {
   HttpException,
   HttpStatus,
   UseGuards,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -19,6 +21,7 @@ import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('/boards/:boardId/tasks')
 @UseGuards(AuthGuard)
+@UsePipes(new ValidationPipe({ transform: true }))
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
