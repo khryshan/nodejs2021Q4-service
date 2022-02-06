@@ -3,13 +3,12 @@ import {
   Column,
   Entity,
   ManyToOne,
-  PrimaryGeneratedColumn
-} from "typeorm";
-import { Board } from "./board.entity";
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Board } from './board.entity';
 
 @Entity({ name: 'column' })
 export class Columns extends BaseEntity {
-
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
@@ -19,10 +18,6 @@ export class Columns extends BaseEntity {
   @Column('int')
   order!: number;
 
-  @ManyToOne(
-    () => Board,
-    board => board.columns,
-    {onDelete: 'CASCADE'}
-  )
+  @ManyToOne(() => Board, (board) => board.columns, { onDelete: 'CASCADE' })
   boardId!: string;
 }

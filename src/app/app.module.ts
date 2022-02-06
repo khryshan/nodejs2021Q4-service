@@ -12,11 +12,10 @@ import { TasksModule } from '../tasks/tasks.module';
 import * as ormconfig from '../ormconfig';
 import { LOG_LEVEL } from '../common/app.config';
 
-
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.env '
+      envFilePath: '.env ',
     }),
     LoggerModule.forRoot({
       pinoHttp: {
@@ -25,7 +24,7 @@ import { LOG_LEVEL } from '../common/app.config';
           res(reply) {
             return {
               statusCode: reply.statusCode,
-            }
+            };
           },
           req(request) {
             return {
@@ -33,21 +32,22 @@ import { LOG_LEVEL } from '../common/app.config';
               url: request.url,
               params: request.params,
             };
-          }
+          },
         },
         transport: {
           targets: [
             {
               level: 'info',
               target: 'pino-pretty',
-              options: { 
+              options: {
                 destination: './logs/logs.log',
                 mkdir: true,
                 translateTime: 'SYS:dd-mm-yyyy HH:MM:ss',
                 ignore: 'pid,hostname,reqId',
                 singleLine: true,
-              }
-            }, {
+              },
+            },
+            {
               level: 'error',
               target: 'pino-pretty',
               options: {
@@ -56,8 +56,8 @@ import { LOG_LEVEL } from '../common/app.config';
                 translateTime: 'SYS:dd-mm-yyyy HH:MM:ss',
                 ignore: 'pid,hostname,reqId',
                 singleLine: true,
-              }
-            }, 
+              },
+            },
             {
               target: 'pino-pretty',
               level: LOG_LEVEL,
@@ -67,16 +67,16 @@ import { LOG_LEVEL } from '../common/app.config';
                 ignore: 'pid,hostname,reqId,responseTime',
                 singleLine: true,
               },
-            }
+            },
           ],
         },
-      }
+      },
     }),
     TypeOrmModule.forRoot(ormconfig),
     AuthModule,
     UsersModule,
     BoardsModule,
-    TasksModule
+    TasksModule,
   ],
   controllers: [AppController],
   providers: [AppService],

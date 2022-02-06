@@ -3,14 +3,17 @@ import { getRepository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { genHashPassword } from '../lib/helpers/hashHelper'
+import { genHashPassword } from '../lib/helpers/hashHelper';
 
 @Injectable()
 export class UsersService {
   async create(createUserDto: CreateUserDto) {
     const repository = getRepository(User);
     const hashedPassword = await genHashPassword(createUserDto?.password);
-    const newUserDB = repository.create({...createUserDto, password: hashedPassword });
+    const newUserDB = repository.create({
+      ...createUserDto,
+      password: hashedPassword,
+    });
     await repository.save(newUserDB);
     return newUserDB;
   }
@@ -32,9 +35,9 @@ export class UsersService {
     const currentUser = await repository.findOne(id);
 
     if (currentUser) {
-      await repository.update(id, {...currentUser, ...updateUserDto});
+      await repository.update(id, { ...currentUser, ...updateUserDto });
     }
-    const updatedUser = await repository.findOne(id)
+    const updatedUser = await repository.findOne(id);
     return updatedUser;
   }
 
@@ -45,7 +48,7 @@ export class UsersService {
 
     if (currentUser) {
       await repository.delete(id);
-      result = true
+      result = true;
     }
 
     return result;
@@ -54,7 +57,7 @@ export class UsersService {
   async getUserByLogin(login: string) {
     const repository = getRepository(User);
     const currentUser = await repository.findOne({ login });
-  
+
     return currentUser;
-  };
+  }
 }

@@ -4,7 +4,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { UsersModule } from '../users/users.module';
-import { JWT_SECRET_KEY } from '../common/app.config'
+import { JWT_SECRET_KEY } from '../common/app.config';
 
 @Module({
   controllers: [AuthController],
@@ -12,12 +12,9 @@ import { JWT_SECRET_KEY } from '../common/app.config'
   imports: [
     forwardRef(() => UsersModule),
     JwtModule.register({
-      secret: JWT_SECRET_KEY
-    })
+      secret: JWT_SECRET_KEY,
+    }),
   ],
-  exports: [
-    AuthService,
-    JwtModule
-  ]
+  exports: [AuthService, JwtModule],
 })
 export class AuthModule {}

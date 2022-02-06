@@ -30,8 +30,8 @@ export class BoardsService {
     let currentBoard = await repository.findOne(id);
 
     if (currentBoard) {
-      currentBoard = Object.assign(currentBoard, updateBoardDto)
-      await repository.save(currentBoard)
+      currentBoard = Object.assign(currentBoard, updateBoardDto);
+      await repository.save(currentBoard);
     }
     return currentBoard;
   }
@@ -43,9 +43,9 @@ export class BoardsService {
 
     if (currentBoard) {
       await repository.delete(id);
-      result = true
+      result = true;
     }
 
     return result;
-    }
+  }
 }

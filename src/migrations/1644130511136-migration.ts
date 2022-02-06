@@ -1,10 +1,10 @@
-import {MigrationInterface, QueryRunner} from "typeorm";
+import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class migration1644130511136 implements MigrationInterface {
-    name = 'migration1644130511136'
+  name = 'migration1644130511136';
 
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
             CREATE TABLE "column" (
                 "id" uuid NOT NULL DEFAULT uuid_generate_v4(),
                 "title" character varying(200) NOT NULL,
@@ -13,14 +13,14 @@ export class migration1644130511136 implements MigrationInterface {
                 CONSTRAINT "PK_cee3c7ee3135537fb8f5df4422b" PRIMARY KEY ("id")
             )
         `);
-        await queryRunner.query(`
+    await queryRunner.query(`
             CREATE TABLE "board" (
                 "id" uuid NOT NULL DEFAULT uuid_generate_v4(),
                 "title" character varying(200) NOT NULL,
                 CONSTRAINT "PK_865a0f2e22c140d261b1df80eb1" PRIMARY KEY ("id")
             )
         `);
-        await queryRunner.query(`
+    await queryRunner.query(`
             CREATE TABLE "task" (
                 "id" uuid NOT NULL DEFAULT uuid_generate_v4(),
                 "title" character varying(200) NOT NULL,
@@ -32,7 +32,7 @@ export class migration1644130511136 implements MigrationInterface {
                 CONSTRAINT "PK_fb213f79ee45060ba925ecd576e" PRIMARY KEY ("id")
             )
         `);
-        await queryRunner.query(`
+    await queryRunner.query(`
             CREATE TABLE "user" (
                 "id" uuid NOT NULL DEFAULT uuid_generate_v4(),
                 "login" character varying(100) NOT NULL,
@@ -41,30 +41,29 @@ export class migration1644130511136 implements MigrationInterface {
                 CONSTRAINT "PK_cace4a159ff9f2512dd42373760" PRIMARY KEY ("id")
             )
         `);
-        await queryRunner.query(`
+    await queryRunner.query(`
             ALTER TABLE "column"
             ADD CONSTRAINT "FK_6b4808fbdd613b62ab2c3a9782e" FOREIGN KEY ("boardIdId") REFERENCES "board"("id") ON DELETE CASCADE ON UPDATE NO ACTION
         `);
-        await queryRunner.query(`INSERT INTO "user" (name, login, password)
+    await queryRunner.query(`INSERT INTO "user" (name, login, password)
         VALUES('admin','admin','$2a$10$Nq4o6h1Za3TRwTIXUH9houWHNycEO2zVCbg5wQhUPJdFiBOxtqKPm')`);
-    }
+  }
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
             ALTER TABLE "column" DROP CONSTRAINT "FK_6b4808fbdd613b62ab2c3a9782e"
         `);
-        await queryRunner.query(`
+    await queryRunner.query(`
             DROP TABLE "user"
         `);
-        await queryRunner.query(`
+    await queryRunner.query(`
             DROP TABLE "task"
         `);
-        await queryRunner.query(`
+    await queryRunner.query(`
             DROP TABLE "board"
         `);
-        await queryRunner.query(`
+    await queryRunner.query(`
             DROP TABLE "column"
         `);
-    }
-
+  }
 }

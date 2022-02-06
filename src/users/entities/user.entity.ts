@@ -1,10 +1,9 @@
-import { BaseEntity, Column, Entity,  PrimaryGeneratedColumn} from "typeorm";
-import { Exclude } from "class-transformer";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 @Entity('user')
 export class User extends BaseEntity {
-
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id!: string;
 
   @Column({ type: 'varchar', length: 100 })
@@ -17,4 +16,3 @@ export class User extends BaseEntity {
   @Exclude()
   password!: string;
 }
-

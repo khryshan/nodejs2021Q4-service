@@ -35,9 +35,9 @@ export class TasksService {
     const currentTask = await repository.findOne(taskId);
 
     if (currentTask) {
-      await repository.update(taskId, {...currentTask, ...updateTaskDto});
+      await repository.update(taskId, { ...currentTask, ...updateTaskDto });
     }
-    const updatedTask = await repository.findOne(taskId)
+    const updatedTask = await repository.findOne(taskId);
     return updatedTask;
   }
 
@@ -48,19 +48,19 @@ export class TasksService {
 
     if (currentTask) {
       await repository.delete(taskId);
-      result = true
+      result = true;
     }
 
     return result;
   }
 
-  async deleteTasksOfBoard (boardId: string) {
+  async deleteTasksOfBoard(boardId: string) {
     const repository = getRepository(Task);
     await repository.delete({ boardId });
-  };
+  }
 
-  async setDefaultUserId (userId:string) {
+  async setDefaultUserId(userId: string) {
     const repository = getRepository(Task);
     await repository.update({ userId }, { userId: null });
-  };
+  }
 }

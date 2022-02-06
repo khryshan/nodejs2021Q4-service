@@ -1,9 +1,9 @@
-import {ConnectionOptions} from 'typeorm';
+import { ConnectionOptions } from 'typeorm';
 import {
   POSTGRES_USER,
   POSTGRES_PASSWORD,
-  POSTGRES_DB
-}  from './common/app.config';
+  POSTGRES_DB,
+} from './common/app.config';
 
 const config: ConnectionOptions = {
   type: 'postgres',
@@ -12,11 +12,11 @@ const config: ConnectionOptions = {
   username: POSTGRES_USER,
   password: POSTGRES_PASSWORD,
   database: POSTGRES_DB,
-  entities: ["dist/**/*.entity{.ts,.js}"],
+  entities: ['dist/**/*.entity{.ts,.js}'],
   synchronize: false,
 
   migrationsRun: true,
-  migrations: ["dist/migrations/*{.ts,.js}"],
+  migrations: ['dist/migrations/*{.ts,.js}'],
   cli: {
     migrationsDir: 'src/migrations',
   },
