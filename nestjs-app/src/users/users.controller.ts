@@ -63,7 +63,7 @@ export class UsersController {
     await this.tasksService.setDefaultUserId(id);
 
     if(result) {
-      return ({message: 'User has been removed'});
+      return;
     }
     throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
   }

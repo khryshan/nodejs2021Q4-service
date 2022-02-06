@@ -70,7 +70,7 @@ export class TasksController {
     const result = await this.tasksService.remove(taskId);
 
     if(result) {
-      return ({message: 'Task has been removed'});
+      return;
     }
     throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
   }

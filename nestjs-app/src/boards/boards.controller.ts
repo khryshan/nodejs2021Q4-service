@@ -62,7 +62,7 @@ export class BoardsController {
     await this.tasksService.deleteTasksOfBoard(id);
 
     if(result) {
-      return ({message: 'Board has been removed'});
+      return;
     }
     throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
   }
